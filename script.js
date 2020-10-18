@@ -1,7 +1,3 @@
-//need a snakeBlock class with properties xspeed, yspeed, xpositon, yposition
-//need to create a new instance of the snakeBlock class every time the snake eats an apple
-//need to push each instance of snakeBlock into a snake array 
-//need to have a marker variable to guide snakeBlocks that follow the first one ( what about when 2 or more markers will be active? potential marker array)
 const canvas = document.querySelector('canvas');
 const canvasContext = canvas.getContext('2d');
 snakeModules = []; 
@@ -26,7 +22,19 @@ window.onload = function() {
 	//create first snake
 	snakeGrower();
     snakeHead = snakeModules[0];
-	setInterval(drawEverything, 2);
+	setInterval(drawEverything, 1);
+}
+
+const snakeGrower = () => {
+	if(snakeModules.length == 0){
+		snakeModule = new Snake(0, 0, 0.5, 0);
+		snakeModules.push(snakeModule);
+	} else {
+		//need to know values for the last snake part for the constructor
+		snakeTail = snakeModules[snakeModules.length - 1];
+		snakeTailDirection();
+		snakeModules.push(snakeModule);
+	}
 }
 
 const checkMarkers = (module) => {
@@ -62,17 +70,7 @@ const drawEverything = () => {
 	})
 }
 
-const snakeGrower = () => {
-	if(snakeModules.length == 0){
-		snakeModule = new Snake(0, 0, 0.5, 0);
-		snakeModules.push(snakeModule);
-	} else {
-		//need to know values for the last snake part for the constructor
-		snakeTail = snakeModules[snakeModules.length - 1];
-		snakeTailDirection();
-		snakeModules.push(snakeModule);
-	}
-}
+
 
 const snakeHeadDirection = (module) => {
 	module.snakeX = module.snakeX + module.snakeXspeed;

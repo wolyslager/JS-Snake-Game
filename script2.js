@@ -2,6 +2,11 @@ const canvas = document.querySelector('canvas');
 const canvasContext = canvas.getContext('2d');
 let snakeBlocks = [];
 let snakeHead;
+let appleX;
+let appleY;
+let appleWidth = 2;
+let appleHeight = 2;
+let score = -1;
 
 class SnakeBlock {
 	constructor(xPosition, xSpeed, yPosition, ySpeed){
@@ -16,8 +21,10 @@ class SnakeBlock {
 }
 
 window.onload = function() {
+	//call random apple generator function to initialize 
 	snakeGrower();
     snakeHead = snakeBlocks[0];
+    appleGenerator();
 	setInterval(drawEverything, 1);
 }
 
@@ -71,7 +78,7 @@ const checkTurnPoints = (block) => {
 		block.yPosition = block.yPosition + block.ySpeed;
 	}
 
-	canvasContext.fillStyle = 'blue';
+	canvasContext.fillStyle = 'green';
 	canvasContext.fillRect(block.xPosition, block.yPosition, block.snakeWidth, block.snakeHeight);
 }
 
@@ -81,34 +88,42 @@ const checkForCollision = () => {
 	snakeBlocks.forEach((block, index) => {
 		if(index!=0){
 			if(Math.round(block.xPosition) == Math.round(leadBlock.xPosition) && Math.round(block.yPosition) == Math.round(leadBlock.yPosition)){
-				alert('lost')
+				alert('Game Over! Try Again');
+				clearInterval();
 				location.reload();
+
 			}
 		}
 	});
 
 	//wall intersection
 	if(leadBlock.xPosition == -1 || leadBlock.xPosition == canvas.width -5 || leadBlock.yPosition == -1 || leadBlock.yPosition == canvas.height -5){
-		alert('Game over! Try again')
-		location.reload()
+		alert('Game over! Try again');
+		clearInterval();
+		location.reload();
 	} 
-	
 }
 
 const snakeHeadDirection = (block) => {
 	//loop through all of the blocks and check to see that none of them intersect with the head
 	block.xPosition = block.xPosition + block.xSpeed;
 	block.yPosition = block.yPosition + block.ySpeed;
-	canvasContext.fillStyle = 'red';
+	canvasContext.fillStyle = 'green';
 	canvasContext.fillRect(block.xPosition, block.yPosition, block.snakeWidth, block.snakeHeight);
 }
 
 const drawEverything = () => {
+	//draw canvas
 	canvasContext.fillStyle = 'black';
 	canvasContext.fillRect(0,0, canvas.width, canvas.height);
+	//draw apple
+	canvasContext.fillStyle = 'red';
+	canvasContext.fillRect(appleX ,appleY ,appleWidth ,appleHeight);
 	snakeBlocks.forEach((block, index) => {
 		if(index == 0){
 			checkForCollision();
+			checkForAppleContact();
+			//checkForAppleContact()
 			snakeHeadDirection(block);
 		} else {
 			checkTurnPoints(block);
@@ -147,13 +162,46 @@ document.addEventListener('keydown', function(e){
   			snakeHead.turnPoint = snakeHead.yPosition;
   		}
   		break;
-  	case 32:
-  		alert('stop')
-  		break;	
   }
 })
 
-const button = document.querySelector('.add');
-button.addEventListener('click', function(){
-	snakeGrower();
-})
+const xGenerator = (max, min, snakeXPositions) => {
+	//check that x coordinate generated is not occupied by a snakeblock
+	let xCoordinate = Math.floor(Math.random() * (max - min + 1) + min);
+	return (snakeXPositions.includes(xCoordinate)) ? xGenerator(max, min) : xCoordinate;
+}
+
+const yGenerator = (max, min, snakeYPositions) => {
+	//check that y coordinate generated is not occupied by a snakeblock
+	let yCoordinate = Math.floor(Math.random() * (max - min + 1) + min);
+	return (snakeYPositions.includes(yCoordinate)) ? yGenerator(max, min) : yCoordinate;	
+}
+
+const checkForAppleContact = () => {
+	//check that snakeHead has not collided with apple
+	if((appleX >= snakeHead.xPosition - 3 && appleX <= (snakeHead.xPosition + 3)) && (appleY >= snakeHead.yPosition - 3 && appleY <= (snakeHead.yPosition + 3))){
+		snakeGrower();
+		appleGenerator();
+	}
+}
+
+const appleGenerator = () => {
+	score+=1;
+	let scoreText = document.querySelector('.score');
+	scoreText.innerText = "Score : " + score;
+	let snakeXPositions = [];
+	let snakeYPositions = [];
+	let maxX = canvas.width - 5;
+	let minX = 0;
+	let maxY = canvas.height -5;
+	let minY = 0;
+	snakeBlocks.forEach((block) => {
+		snakeXPositions.push(block.xPosition);
+		snakeYPositions.push(block.yPosition);
+	})
+
+	 appleX = xGenerator(maxX, minX, snakeXPositions);
+	 appleY = yGenerator(maxY, minY, snakeYPositions);
+
+}
+
