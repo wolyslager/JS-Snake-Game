@@ -2,7 +2,7 @@
 
 Classic snake game application built in pure JavaScript, HTML, and CSS 
 
-Try it [here!](https://wolyslager.github.io/snake-game-app/)
+Try it [here!](https://wolyslager.github.io/JS-Snake-Game/)
 
 ![](screenshot.png?raw=true)
 
