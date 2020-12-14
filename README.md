@@ -10,4 +10,4 @@ Try it [here!](https://wolyslager.github.io/JS-Snake-Game/)
 Through this project, I learned how to use a combination of the canvas element and setInterval() to achieve simple animations. Building out the snake logic was fun and challenging at the same time because of the relationship between the interval length needed to execute the code and the smoothness of the animation. Overall a great project!
 
 ## Author 
-* William Olyslager - Full-Stack Developer - [Linkedin](https://www.linkedin.com/in/william-olyslager-082151138/)
+* William Olyslager - Full-Stack Developer - [Linkedin](https://www.linkedin.com/in/william-olyslager-082151138/) - [Website](https://wolyslager.github.io/Personal-Portfolio/)
