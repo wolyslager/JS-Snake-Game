@@ -1,18 +1,40 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>Snake Game App</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <title>Snake Game App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
+
 <body>
-	<div class="title">
-		<h1>Snake Game</h1>
-	</div>
-	<div class="canvasContainer">
-		<canvas id="myCanvas"></canvas>
-	</div>
-	<h2 class="score">Score: </h2>
-<script type="text/javascript" src="script2.js"></script>
+    <div class="title">
+        <h1>Snake Game</h1>
+    </div>
+    <div class="canvasContainer">
+        <canvas id="myCanvas"></canvas>
+        <div class="overlay">
+	        <div class="card" style="width:50em;">
+	            <div class="card-header">
+	                Welcome to the Snake Game!
+	            </div>
+	            <div class="card-body">
+	                <h5 class="card-title">Instructions</h5>
+	                <p class="card-text">
+	                	1) Use the arrow keys to control the snake <br/>
+	                	2) Press the P key to pause at any time <br/>
+	                	3) Avoid colliding with the walls and snake!
+	                </p>
+	                <a href="#" class="btn btn-primary">Play</a>
+	            </div>
+	        </div>
+    	</div>
+    </div>
+    <h2 class="score">Score: </h2>
+    <h2 class="high-score">High Score: </h2>
+    <script type="text/javascript" src="script2.js"></script>
 </body>
+
 </html>
